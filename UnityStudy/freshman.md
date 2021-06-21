@@ -6,7 +6,7 @@
 
 ​	**1.Hierarchy			---层级**
 
-​		![image-20210621164640217](C:\Users\11916\AppData\Roaming\Typora\typora-user-images\image-20210621164640217.png)
+​		![20210621191236](freshman.assets/20210621191236.png)
 
 ​	**2.打开一幅图片素材**
 
@@ -16,7 +16,7 @@
 
 ​	**3.左上角操作图标**
 
-![image-20210621163641271](C:\Users\11916\AppData\Roaming\Typora\typora-user-images\image-20210621163641271.png)
+​	![20210621191235](freshman.assets/20210621191235.png)
 
 ​	从左到右:
 
@@ -34,7 +34,7 @@
 
 ​	Move, Rotate or Scale selected objects:
 
-​	**4.Tilemap			---瓦图**
+​	**4.Tilemap	**		---瓦图
 
 ​	 	打开Tile palette			---瓦片调色板
 
@@ -48,7 +48,7 @@
 
 ​		My result：
 
-​		![image-20210621172606771](C:\Users\11916\AppData\Roaming\Typora\typora-user-images\image-20210621172606771.png)
+​		![20210621191238](freshman.assets/20210621191238.png)
 
 ## 二、图层layer
 
