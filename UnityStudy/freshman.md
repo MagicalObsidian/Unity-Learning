@@ -34,7 +34,7 @@
 
 ​	Move, Rotate or Scale selected objects:
 
-​	**4.Tilemap	**		---瓦图
+​	**4.Tilemap			---瓦图**
 
 ​	 	打开Tile palette			---瓦片调色板
 
