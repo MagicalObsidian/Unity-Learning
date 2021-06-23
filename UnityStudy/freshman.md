@@ -96,6 +96,12 @@
 
 ​		编写代码使用的高级程序语言是C#，使用的IDE可以选择 Visual Studio 或者 Visual Studio Code 等，根据个人习惯，这里我所使用的是 VS Code。二者若需要Unity代码提示等功能都可下载Unity相关扩展插件。
 
+​		<u>如果遇到了 IDE 无法是用代码补全的问题，进入Edit --> Preference --> External Tools --> External Script Editor 设置为你所用的 IDE。</u>
+
+​		如果是新建的一个Unity工程，打开C#脚本后输入关键词发现并没提示或者补全功能，这个问题也好解决，就是**缺少.sln**文件，解决方法如下：
+
+​		**Assets->Open C# Project**，会自动打开VSCode，这时发现工程的根目录已经生成**.sln**文件，这时再输入关键词就有提示和补全功能。（转自简书）
+
 ​	**3.编写代码**
 
 ​			PlayerController.cs :
