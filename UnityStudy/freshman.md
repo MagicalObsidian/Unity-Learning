@@ -81,3 +81,135 @@
 ​	![fall](freshman.assets/fall.gif)
 
 # 三、角色移动 Move
+
+​	**1.输入方向键**
+
+​		Edit --> Project Settings --> Input --> Axes(轴线) --> Horizontal(横向移动)
+
+​		在这里可以自己更改和添加按键
+
+​	**2.添加脚本代码 Script**
+
+​		在 Player 中 Add Component --> new Script,创建后文件在 Assets的根目录下。
+
+​		为了规范化，我们新建文件夹 Scripts，用于存放我们所有的 Script代码。
+
+​		编写代码使用的高级程序语言是C#，使用的IDE可以选择 Visual Studio 或者 Visual Studio Code 等，根据个人习惯，这里我所使用的是 VS Code。二者若需要Unity代码提示等功能都可下载Unity相关扩展插件。
+
+​	**3.编写代码**
+
+​			PlayerController.cs :
+
+```c#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public Rigidbody2D rb;
+    public float speed;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame 每一帧更新
+    void Update()
+    {
+        Movement();
+    }
+
+    void Movement()
+    {
+        float horizontal_move;//用于获取Input的值，-1往左，+1往右
+        horizontal_move = Input.GetAxis("Horizontal");
+
+        if (horizontal_move != 0)//如果水平方向值不为 0 
+        {
+            rb.velocity = new Vector2(horizontal_move * speed, rb.velocity.y);
+            //刚体的运动速度 为 2D的向量， x方向速度就是水平方向值 乘以 速度， 而 y方向上不变
+        }
+    }
+}
+```
+
+​	**4.tips & result**
+
+​		在 Game 界面调试时，如果我们发现了手感比较好的参数，可以点击组件右上角的齿轮设置里的 Copy Component 拷贝参数，从而获得更好的参数，达到想要的效果。
+
+​		**My reuslt：**
+
+​		![move](freshman.assets/move.gif)
+
+# 四、角色方向 & 跳跃 Jump
+
+​	**1.角色方向**
+
+​		在 Transform 中的 Scale 有 X、Y、Z 三个值，默认为 1。它的意思是对象的某方向缩放比例程度
+
+​		如果我们把 X 的值由 1 改为 -1，可以发现原本朝向右的小狐狸现在朝向了左，如下图：
+
+​		![image-20210623220306868](freshman.assets/image-20210623220306868.png) 
+
+​		同理，我们可以更改 Y 或 Z达到不同的效果。
+
+​		接下来我们从代码中获取对象的朝向，以及通过按键更换朝向。
+
+​		代码片段：
+```c#
+    void Movement()
+    {
+        float horizontal_move;//用于获取Input的值，-1往左，+1往右
+        float face_direction;//用于获取输入的朝向,-1往左，+1往右
+
+        horizontal_move = Input.GetAxis("Horizontal");
+        face_direction = Input.GetAxisRaw("Horizontal");
+
+        if (horizontal_move != 0)//如果水平方向值不为 0 
+        {
+            rb.velocity = new Vector2(horizontal_move * speed, rb.velocity.y);
+            //刚体的运动速度 为 2D的向量， x方向速度就是水平方向值 乘以 速度， 而 y方向上不变
+        }
+
+        if(face_direction != 0)
+        {
+            transform.localScale = new Vector3(face_direction, 1, 1);
+        }
+    }
+```
+
+​		效果：
+
+​		![move_toward](freshman.assets/move_toward.gif)
+
+​		**2.FixedUpdated**
+
+​			为了使游戏在不同配置的设备上有相同的帧率，我们将 Update 函数改为 FixedUpdate 函数。
+
+​			Update 是每一帧执行一次，而 FixedUpdate 则会根据设备的物理时间执行。
+
+​			b.velocity = new Vector2(horizontalMove * speed * Time.deltaTime, rb.velocity.y);
+
+​			speed 乘上物理时间 Time.deltaTime，deltaTime代表两帧之间的间隔时间。
+
+​		**3.跳跃**
+
+​			同样，在 Edit --> Project Settings --> Input --> Axes(轴线) 中可以找到 Jump，默认的跳跃键是空格 Space
+
+​			代码片段：
+```c#
+        if(Input.GetButtonDown("Jump"))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpforce * Time.deltaTime);
+        }
+```
+
+​			效果:
+
+​			![jump](freshman.assets/jump.gif)
+
+# 五、动画效果 Animation
+
