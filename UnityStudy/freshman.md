@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
 
 # 五、动画效果 Animation
 
-	## 		1.Animation
+​	**1.Animation**
 
 ​					首先我们在 Assets 文件夹下创建 Animation 文件夹，用于存放动画文件。
 
