@@ -219,3 +219,49 @@ public class PlayerController : MonoBehaviour
 
 # 五、动画效果 Animation
 
+	## 		1.Animation
+
+​					首先我们在 Assets 文件夹下创建 Animation 文件夹，用于存放动画文件。
+
+​					在 Player 中添加组件 Animator
+
+​					然后新建一个 Animation Controller，命名为 Player ，将其添加到 Player 的 Animator中。
+
+​					接着，调出 Animation 窗口，并将对应的动画图片素材拖拽到时间轴里，通过调整时间轴得到合适的动画效果。
+
+​					idle(闲置) & run（跑动）:
+
+​					![idle](freshman.assets/idle.gif) 
+
+​					![run](freshman.assets/run.gif)
+
+​					如何让闲置状态与跑动状态动画之间有衔接呢？
+
+​					**创建过渡：**
+
+​					在视窗 Animator 中对 idle **make translation** 箭头中指向 run， 同样， run 也 **make translation** 箭头指向 idle。
+
+​					![image-20210624153624334](freshman.assets/image-20210624153624334.png)
+
+​					修改变化箭头
+
+​					去掉  Has Exit Time
+​					Transition Duration 设置成 0	
+
+​					为了获取运动状态，还需要在视窗 Animator 的 parameters 中 设置变化参数 running（浮点型）
+
+​					并将Player Animation  加到 Player
+
+​					然后还需要在脚本代码中添加对应的判断语句。
+
+​					代码片段：
+```c#
+public Animator anim;
+animator.SetFloat("running", Mathf.Abs(face_direction));
+```
+
+​					**My reuslt：**
+
+​					![run-idle](freshman.assets/run-idle.gif)
+
+# 六、跳跃动画 & LayerMask
