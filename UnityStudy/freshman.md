@@ -265,3 +265,146 @@ animator.SetFloat("running", Mathf.Abs(face_direction));
 ​					![run-idle](freshman.assets/run-idle.gif)
 
 # 六、跳跃动画 & LayerMask
+
+**1.跳跃动画**
+
+跳跃动画简单地有两种状态 ： **jumping** 和 **falling**
+
+然后可以分析出不同之间状态的转换：
+
+idle & run 都在 jumping == true 时进入 jump;
+
+jump 在 jumping == false && falling == true 时进入 fall；
+
+fall 在 falling == false && idle == true 时进入 idle;
+
+在视窗 Animator 中我们可以添加对应的 **bool** 型变量，通过 make translation 连接不同的动画状态并设置判断条件，最后在脚本代码中，实现具体代码。
+
++ 如何实现下落过程中碰撞到地面（地图的碰撞体）后停止下落动画并转为闲置动画？
+
+  首先为 Tilemap 添加 Layer， 新建一个名为 Ground 的 Layer：
+
+  ![image-20210625161302954](freshman.assets/image-20210625161302954.png)
+
+  然后新建碰撞体对象：
+
+  ```c#
+  public Collider2D coll;//碰撞体
+  ```
+  
+  并将 Player 的 Box Collider 2D 组件与其绑定。
+  
+  最后将
+  ```c#
+  public LayerMask ground;//地面
+  ```
+  
+  与前面的 **Ground** Layer绑定：
+  
+  ![image-20210625161754678](freshman.assets/image-20210625161754678.png)
+
+代码片段：
+
+```c#
+    //动画切换
+    void SwitchAnim()
+    {
+        animator.SetBool("idle", false);
+        if(animator.GetBool("jumping"))//如果正在跳跃
+        {
+            //如果当前的跳跃力小于 0，则变为下落状态
+            if(rb.velocity.y < 0)
+            {
+                animator.SetBool("jumping",false);
+                animator.SetBool("falling", true);
+            }
+        }
+        //与地面碰撞：如果下落到地面，则由下落状态转为闲置状态
+        else if(coll.IsTouchingLayers(ground))
+        {
+            animator.SetBool("falling", false);
+            animator.SetBool("idle", true);
+        }
+    }  
+```
+
+**My result:**
+
+![jump-fall-idle](freshman.assets/jump-fall-idle.gif)
+
+**2.修复移动错误**
+
++ 为什么取消z轴冻结后，会出现角色转动。
+
+原因是横向赋予速度时，刚体会产生推背效果。
+
+解决办法：下半身用球状碰撞体。
+
+# 七、镜头控制 Cinemachine
+
+**1.添加 CameraControl脚本代码**
+
+与之间对我们的小狐狸创建 PlayerController类似，现在我们对镜头 Main Camera 创建 CameraContrl 脚本代码。
+
+代码片段：
+```c#
+public class CameraControl : MonoBehaviour
+{
+    public Transform player;
+
+    // Update is called once per frame
+    void Update()
+    {
+        this.transform.position = new Vector3(player.position.x, player.position.y, -10f);
+    }
+}
+```
+
+我们在镜头控制代码里获得了创建了 Transform 对象 player,并由它来获得 Player 的 Transform 属性，在每一帧更新函数 Update 中，设置镜头的 transform 属性与 Player 的 position 的 x、y 坐标保持一致，这样既可是镜头始终跟随我们的角色。
+
+如果我们希望镜头在 y 轴方向不跟随角色，则设置镜头的 position.y 为 0 既可。
+
+**2.Cinemachine**
+
+安装插件 Cinemachine: window --> PackageManager --> Cinemachine
+
+在 Cinemachine 中 Create 2D Camera。
+
+添加后，原有的 Main Camera 的参数将会替换掉。
+
+CinemachineVirtualCamera 中的 Follow 表示我们的镜头即将要跟随什么角色，于是我们将 Player 拖拽到这里。
+
+Lens： 调整镜头
+
+Body：
+
+**Dead Zone** : 可以设置一个镜头锁死区域，当角色在区域里时，镜头不会移动；但角色离开区域后，镜头开始跟随角色。
+
+**Screen**：可以调整镜头位置
+
+**3.CinemachineConfiner**
+
++ 怎么使我们的角色在移动时，镜头不会超出边界呢 ?
+
+  首先在CM vcam1 --> Extensions --> Add Extensions 的下拉框中选择 Cinemachine Confiner.
+
+  这其实就是限制了在哪一个 2D 范围内可以移动我们的镜头。
+
+  于是我们可以为我们的背景创建一个多边形碰撞体 Polygon Conllider 2D。
+
+  然后编辑大小，使其大致与地图形状一致。（Ctrl + 边 可以删除不需要的边）
+
+  **勾选 Is Trigger** : 因为地图也是一个碰撞体，由于我们的角色也是一个碰撞体，它会把我们的角色弹出。
+
+  将 Background 拖拽到 Cinemachine Confiner 的 Bounding Shape 2D 中，即可实现与 Background 的 Polygon Conllider 2D 的绑定。
+  
+  再继续调整摄像头大小，使其大致产生不会由于超出边界卡顿的效果。
+  
+
+**My result：**
+
+
+
+![cinema](freshman.assets/cinema.gif)
+
+# 八、物品收集 & Perfabs
