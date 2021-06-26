@@ -408,3 +408,34 @@ Body：
 ![cinema](freshman.assets/cinema.gif)
 
 # 八、物品收集 & Perfabs
+
+**1.创建 Cherry 对象**
+
+与前面创建 Player 类似，我们新建了一个 Cherry 对象，并给它添加了动画效果：
+
+![cherry](freshman.assets/cherry.gif)
+
+接下来我们要实现人物碰撞到樱桃后收集樱桃
+
+首先为 Cherry 添加碰撞体 Box Collider 2D, 并勾选 **Is Trigger**
+
+然后新建一个标签（Tag） Collection，将 Cherry 的 Tag 设置为 Collection.
+
+之后再 PlayerController.cs 脚本代码中编写人物碰撞樱桃后收集樱桃的逻辑代码
+
+代码片段：
+```c#
+    private void OnTriggerEnter2D(Collider2D other) {
+        //如果当前碰撞的物体标签是我们选定的 Collection 则销毁对应的对象
+        if(other.tag == "Collection") {
+            Destroy(other.gameObject);
+        }
+    }
+```
+
+效果：
+
+![collect_cherry](freshman.assets/collect_cherry.gif)
+
+添加 int 型变量 Cherry 记录获取到的樱桃数量。
+
