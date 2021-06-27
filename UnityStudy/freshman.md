@@ -439,3 +439,84 @@ Body：
 
 添加 int 型变量 Cherry 记录获取到的樱桃数量。
 
+**2.Prefabs**
+prefab:  预制体
+
+我们在 Assets 中创建 Prefabs 文件夹，把我们需要重复使用的游戏对象保存，这样在所有的有用到这些游戏对象的地方都可以实现同步更改参数。
+
+**3.设计游戏画面**
+
+通过添加游戏素材，图片分层，来绘制我们的游戏地图。
+
+**My reuslt：**
+
+![start1](freshman.assets/start1.gif)
+
+# 九、物理材质 & 空中跳跃
+
+**1.解决人物碰撞墙体会卡住的问题**
+
+在 Assets 中新建 Phyics Material 2D
+
+在 Assets 文件夹下新建 Physics Material 2D
+
+设置它的 Friction（摩擦力）为 0，即光滑效果 
+
+将其添加至 Player 的 Box Collider 2D
+
+**2.解决人物无限跳跃的问题（实现二段跳？）**
+
+编写逻辑代码：
+```c#
+       //角色跳跃(实现二段跳)
+        if(Input.GetButtonDown("Jump"))
+        {
+            if (coll.IsTouchingLayers(ground))//如果跳跃前在地面
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpforce * Time.deltaTime);
+                animator.SetBool("jumping", true);
+                jump_num = 1;//跳起一次
+            }
+            else if(animator.GetBool("jumping") && jump_num == 1) {//如果已经在空中跳起一次
+                rb.velocity = new Vector2(rb.velocity.x, jumpforce * Time.deltaTime);
+                jump_num = 2;//已经二段跳
+            }
+        }
+```
+
+**3.做一个匍匐前进效果？**
+
+
+
+# 十、 UI入门
+
+**1.Canvas**
+
+tips: 选中一个对象后，按键盘<kbd>F</kbd>键(或<kbd>shift</kbd> + <kbd>F</kbd>)可以快速 Focus on 到对象。
+
+新建 UI --> Canvas; 在 Canvas 中新建 Text。
+
+tips:要将两个UI组件对齐以及调整大小，用 Rect Tools (键盘<kbd>T</kbd>)。
+
+![image-20210627203415665](freshman.assets/image-20210627203415665.png)
+
+右边的数字代表我们收集到的樱桃数量或得分。
+
+接下来在代码中将 UI 中的 Text 与变量绑定。
+
+我们新建一个 **Text** 类型的变量 cherry_num， 需要要引用命名空间 **UnityEngine.UI**
+```c#
+cherry_num.text = Cherry.ToString();
+```
+
+**2.设置锚点**
+
+在不同比例的游戏界面下，UI可能不显示，这是因为没有确定UI对象的相对位置。
+
+点击UI对象，在 Rect Transform 中设置对象始终在哪个位置显示。
+
+**My reuslt：**
+
+![image-20210627213129357](freshman.assets/image-20210627213129357.png)
+
+# 十一、敌人 Enemy
