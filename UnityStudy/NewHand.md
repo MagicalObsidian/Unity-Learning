@@ -6,7 +6,7 @@
 
 ​	**1.Hierarchy			---层级**
 
-​		![20210621191236](freshman.assets/20210621191236.png)
+​		![20210621191236](NewHand.assets/20210621191236.png)
 
 ​	**2.打开一幅图片素材**
 
@@ -16,7 +16,7 @@
 
 ​	**3.左上角操作图标**
 
-​	![20210621191235](freshman.assets/20210621191235.png)
+​	![20210621191235](NewHand.assets/20210621191235.png)
 
 ​	从左到右:
 
@@ -48,7 +48,7 @@
 
 ​	**My result：**
 
-​		![20210621191238](freshman.assets/20210621191238.png)
+​		![20210621191238](NewHand.assets/20210621191238.png)
 
 ## 二、图层layer & 角色建立
 
@@ -78,7 +78,7 @@
 
 ​	**My result:**
 
-​	![fall](freshman.assets/fall.gif)
+​	![fall](NewHand.assets/fall.gif)
 
 # 三、角色移动 Move
 
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
 ​		**My reuslt：**
 
-​		![move](freshman.assets/move.gif)
+​		![move](NewHand.assets/move.gif)
 
 # 四、角色方向 & 跳跃 Jump
 
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
 ​		如果我们把 X 的值由 1 改为 -1，可以发现原本朝向右的小狐狸现在朝向了左，如下图：
 
-​		![image-20210623220306868](freshman.assets/image-20210623220306868.png) 
+​		![image-20210623220306868](NewHand.assets/image-20210623220306868.png) 
 
 ​		同理，我们可以更改 Y 或 Z达到不同的效果。
 
@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
 ​		效果：
 
-​		![move_toward](freshman.assets/move_toward.gif)
+​		![move_toward](NewHand.assets/move_toward.gif)
 
 ​		**2.FixedUpdated**
 
@@ -215,7 +215,7 @@ public class PlayerController : MonoBehaviour
 
 ​			效果:
 
-​			![jump](freshman.assets/jump.gif)
+​			![jump](NewHand.assets/jump.gif)
 
 # 五、动画效果 Animation
 
@@ -231,9 +231,9 @@ public class PlayerController : MonoBehaviour
 
 ​					idle(闲置) & run（跑动）:
 
-​					![idle](freshman.assets/idle.gif) 
+​					![idle](NewHand.assets/idle.gif) 
 
-​					![run](freshman.assets/run.gif)
+​					![run](NewHand.assets/run.gif)
 
 ​					如何让闲置状态与跑动状态动画之间有衔接呢？
 
@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
 
 ​					在视窗 Animator 中对 idle **make translation** 箭头中指向 run， 同样， run 也 **make translation** 箭头指向 idle。
 
-​					![image-20210624153624334](freshman.assets/image-20210624153624334.png)
+​					![image-20210624153624334](NewHand.assets/image-20210624153624334.png)
 
 ​					修改变化箭头
 
@@ -262,7 +262,7 @@ animator.SetFloat("running", Mathf.Abs(face_direction));
 
 ​					**My reuslt：**
 
-​					![run-idle](freshman.assets/run-idle.gif)
+​					![run-idle](NewHand.assets/run-idle.gif)
 
 # 六、跳跃动画 & LayerMask
 
@@ -284,7 +284,7 @@ fall 在 falling == false && idle == true 时进入 idle;
 
   首先为 Tilemap 添加 Layer， 新建一个名为 Ground 的 Layer：
 
-  ![image-20210625161302954](freshman.assets/image-20210625161302954.png)
+  ![image-20210625161302954](NewHand.assets/image-20210625161302954.png)
 
   然后新建碰撞体对象：
 
@@ -301,7 +301,7 @@ fall 在 falling == false && idle == true 时进入 idle;
   
   与前面的 **Ground** Layer绑定：
   
-  ![image-20210625161754678](freshman.assets/image-20210625161754678.png)
+  ![image-20210625161754678](NewHand.assets/image-20210625161754678.png)
 
 代码片段：
 
@@ -330,7 +330,7 @@ fall 在 falling == false && idle == true 时进入 idle;
 
 **My result:**
 
-![jump-fall-idle](freshman.assets/jump-fall-idle.gif)
+![jump-fall-idle](NewHand.assets/jump-fall-idle.gif)
 
 **2.修复移动错误**
 
@@ -403,9 +403,7 @@ Body：
 
 **My result：**
 
-
-
-![cinema](freshman.assets/cinema.gif)
+![cinema](NewHand.assets/cinema.gif)
 
 # 八、物品收集 & Perfabs
 
@@ -413,7 +411,7 @@ Body：
 
 与前面创建 Player 类似，我们新建了一个 Cherry 对象，并给它添加了动画效果：
 
-![cherry](freshman.assets/cherry.gif)
+![cherry](NewHand.assets/cherry.gif)
 
 接下来我们要实现人物碰撞到樱桃后收集樱桃
 
@@ -435,7 +433,7 @@ Body：
 
 效果：
 
-![collect_cherry](freshman.assets/collect_cherry.gif)
+![collect_cherry](NewHand.assets/collect_cherry.gif)
 
 添加 int 型变量 Cherry 记录获取到的樱桃数量。
 
@@ -450,7 +448,7 @@ prefab:  预制体
 
 **My reuslt：**
 
-![start1](freshman.assets/start1.gif)
+![start1](NewHand.assets/start1.gif)
 
 # 九、物理材质 & 空中跳跃
 
@@ -498,7 +496,7 @@ tips: 选中一个对象后，按键盘<kbd>F</kbd>键(或<kbd>shift</kbd> + <kb
 
 tips:要将两个UI组件对齐以及调整大小，用 Rect Tools (键盘<kbd>T</kbd>)。
 
-![image-20210627203415665](freshman.assets/image-20210627203415665.png)
+![image-20210627203415665](NewHand.assets/image-20210627203415665.png)
 
 右边的数字代表我们收集到的樱桃数量或得分。
 
@@ -517,6 +515,15 @@ cherry_num.text = Cherry.ToString();
 
 **My reuslt：**
 
-![image-20210627213129357](freshman.assets/image-20210627213129357.png)
+![image-20210627213129357](NewHand.assets/image-20210627213129357.png)
 
 # 十一、敌人 Enemy
+
+**1.新建 Frog**
+
+与 Player 类似，新建 Sprite ，显示图层、添加动画效果、添加刚体、添加碰撞体。
+
+**2.编写敌人机制代码**
+
+代码片段:
+
