@@ -484,7 +484,30 @@ prefab:  预制体
 
 **3.做一个匍匐前进效果？**
 
+我们有两个碰撞体 **Box Collider** 和 **Circle Collider**，其中，Circle Collider 主要与地面判断，而Box Collider 可以控制其长宽来与除地面的物体来进行判断。
 
+代码片段：
+```c#
+        //角色匍匐前进
+        if(Input.GetKey(KeyCode.S)) 
+        {
+            if(coll.IsTouchingLayers(ground))
+            {
+                coll_creep.enabled = false;
+                //设置 Box Collider 不可用，这样就可以以较低的 Circle Collider通过了
+                animator.SetBool("creeping", true);
+            }
+        }
+        else 
+        {
+            coll_creep.enabled = true;
+            animator.SetBool("creeping", false);
+        }
+```
+
+**My result:**
+
+![creep](NewHand.assets/creep.gif)
 
 # 十、 UI入门
 
@@ -525,5 +548,25 @@ cherry_num.text = Cherry.ToString();
 
 **2.编写敌人机制代码**
 
-代码片段:
+给 Frog 添加 标签 Enemy
 
+与 OnTriggerEnter2D 不同，在 **OnCollisionEnter2D** 函数中，如果我们要获得 Collision2D 的 tag，需要先获取它的 **gameObject**。
+
+代码片段:
+```c#
+    private void OnCollisionEnter2D(Collision2D other) {
+        //如果人物正在掉落，则通过“踩踏”消灭敌人
+        if(animator.GetBool("falling")) {
+            if(other.gameObject.tag == "Enemy") {
+                Destroy(other.gameObject);
+                //消灭后，还有一个小段的跳跃效果
+                rb.velocity = new Vector2(rb.velocity.x, jumpforce * Time.deltaTime);
+                animator.SetBool("jumping", true);
+            }
+        }
+    }
+```
+
+**My result:**
+
+![fall_attack](NewHand.assets/fall_attack.gif)
