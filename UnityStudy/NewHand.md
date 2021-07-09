@@ -570,3 +570,38 @@ cherry_num.text = Cherry.ToString();
 **My result:**
 
 ![fall_attack](NewHand.assets/fall_attack.gif)
+
+# 十二、 受伤效果 Hurt
+
+**1.添加判断是否受伤的 BOOL 变量**
+```c#
+private bool isHurt;//是否受伤
+```
+
+**2.判断碰撞**
+
+代码片段（**OnCollisionEnter2D**函数中）:
+```c#
+//判断人物在敌人的左右侧,添加一个反弹效果
+else if(transform.position.x != other.gameObject.transform.position.x) {
+    int rebound = transform.position.x -	other.gameObject.transform.position.x < 0 ? -1 : 1;
+    rb.velocity = new Vector2(5 * rebound, rb.velocity.y);
+    isHurt = true;
+}
+```
+
+**3.移动与受伤的冲突**
+
+对于 FixedUpdate 函数来说，如果没有设置 **isHurt** 将无法判断是否受伤，也不会进行 **OnCollisionEnter2D**
+
+函数的判断。**这里或许有更好的优化的地方？**
+
+**4.添加动画效果**
+
+与前面类似，其中，为了后面更多的敌人机制，我们的 **hurt** 效果都可能由 **idle、jump、run** 这些状态得到。
+
+**My result：**
+
+![hurt_attack](NewHand.assets/hurt_attack.gif)
+
+# 十三、AI敌人移动
