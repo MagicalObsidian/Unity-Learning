@@ -605,3 +605,63 @@ else if(transform.position.x != other.gameObject.transform.position.x) {
 ![hurt_attack](NewHand.assets/hurt_attack.gif)
 
 # 十三、AI敌人移动
+
+**1.将 Frog 的碰撞体改为 Circle Collider 2D**
+
+效果更好。
+
+**2.给 Frog 添加脚本代码**
+
+限制 Frog 的移动范围:
+
+在 Frog 下添加子对象 **Left** 和 **Righ**t 分别表示它的左右活动边界。
+
+并将整个 Frog 对象添加到 **Perfabs** 预制体中以便后续添加 Frog，同时可以调整其他 Frog 的左右活动边界。
+
+在设置 Left 时可以添加颜色，使其显眼。
+
+![image-20210710201215989](NewHand.assets/image-20210710201215989.png)![image-20210710201225465](NewHand.assets/image-20210710201225465.png)
+
+代码片段：
+```c#
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        transform.DetachChildren();//与子对象分离
+        //获得左右边界值，然后销毁子对象
+        left_x = left_point.position.x;
+        right_x = right_point.position.x;
+        Destroy(left_point.gameObject);
+        Destroy(right_point.gameObject);
+    }
+    
+    void Movement()
+    {
+        if(face_left)//如果面向左，则向左移动
+        {
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+            if(transform.position.x < left_x)//如果到达左边界则朝向右
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+                face_left = false;
+            }
+        }
+        else //同理，右朝向往右移动
+        {
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+            if(transform.position.x > right_x)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+                face_left = true;
+            }
+        }
+    }
+```
+
+效果：
+
+![frog_move](NewHand.assets/frog_move.gif)
+
+**3.实现青蛙跳跃移动**
+
+资源文件给的青蛙动画有跳跃和下落，青蛙应该是一蹦一蹦的，可以编写代码使青蛙移动更生动形象。
