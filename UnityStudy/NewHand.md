@@ -665,3 +665,35 @@ else if(transform.position.x != other.gameObject.transform.position.x) {
 **3.实现青蛙跳跃移动**
 
 资源文件给的青蛙动画有跳跃和下落，青蛙应该是一蹦一蹦的，可以编写代码使青蛙移动更生动形象。
+
+# 十四、 Animation Events 动画事件
+
+**1.add event**
+
+为了实现动画切换效果，我们可以在 Frog 的 idle 动画进行完之后，设置一个触发器 Animation Event，激活代码里的 Movement函数，在 Movement 函数中实现 Frog 的跳跃下落等动画。这样做的话，在 Update 函数中就不用调用 Movement 函数了。
+
+**2.添加切换动画函数 SwitchAnim**
+
+代码片段：
+```c#
+    void SwithAnim()
+    {
+        if(animator.GetBool("jumping"))
+        {
+            if(rb.velocity.y < 0.1f)
+            {
+                animator.SetBool("jumping", false);
+                animator.SetBool("falling", true);
+            }
+        }
+        if(coll.IsTouchingLayers(ground) && animator.GetBool("falling"))
+        {
+            animator.SetBool("falling", false);
+            animator.SetBool("idle", true);
+        }
+    }
+```
+
+**My result:**
+
+![frog_jump](NewHand.assets/frog_jump.gif)
