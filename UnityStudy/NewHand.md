@@ -697,3 +697,35 @@ else if(transform.position.x != other.gameObject.transform.position.x) {
 **My result:**
 
 ![frog_jump](NewHand.assets/frog_jump.gif)
+
+# 十五、Class 调用
+
+**1.添加敌人 Eagle**
+
+为我们的游戏添加新的敌人 老鹰。 给它添加动画效果以及控制它的 AI 使它能上下飞行。
+
+勾选 Eagle 的 rigidbody2D 中的 Freeze Position X, 使老鹰不会因为人物的碰撞而在 x方向上走。
+
+**2.添加敌人死亡效果**
+
+任何时候状态下敌人都会死亡，所以在Animator中 Any State 指向 death
+
+death 参数设置为 trigger
+
+**3.类的使用**
+
+当我们人物消灭敌人后，要做的两件事是产生**敌人死亡动画** 和 **销毁敌人的游戏对象**。
+
+由于判断消灭敌人的代码在 PlayerController 中，而这时我们又要在其中使用敌人游戏对象，于是我们使用面向对象的程序设计思想，在 PlayerController 中新建 Enemy_Frog对象，并调用消灭敌人的函数 **JumpOn()** 。
+```c#
+Enemy_Frog frog = other.gameObject.GetComponent<Enemy_Frog>();
+```
+
+**4.动画事件 Add event**
+
+消灭敌人这一过程中，如果我们销毁了敌人对象，就无法调用敌人死亡的动画；而如果我们先切换了动画，但由于动画是循环播放的，不会继续销毁对象。所以我们应该在死亡动画执行一次完毕后 Add Eevent 设置其调用的函数为 Death(),其功能即为销毁敌人游戏对象。
+
+**My reuslt:**
+
+![frog_death](NewHand.assets/frog_death.gif)
+
