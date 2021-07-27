@@ -2,8 +2,6 @@
 
 ## 一、素材编辑：
 
-### tips：
-
 ​	**1.Hierarchy			---层级**
 
 ​		![20210621191236](NewHand.assets/20210621191236.png)
@@ -729,3 +727,78 @@ Enemy_Frog frog = other.gameObject.GetComponent<Enemy_Frog>();
 
 ![frog_death](NewHand.assets/frog_death.gif)
 
+# 十六、Audio 音效
+
+**1.下载音效**
+
+从 Assets Store 中下载需要的**免费**音效素材。这里我下载的游戏音效是 **3rd Note SFX Pack** , 背景音乐是 **CasualGameBGM05**。
+
+**2.添加 Audio Source**
+
+首先为 Player 添加组件 Audio Source ，如果该组件左边出现蓝色边框，说明未加入到预制体 Perfabs 中。
+
+![image-20210717220439493](NewHand.assets/image-20210717220439493.png)
+
+若要将其添加到预制体中，可以点击 **Overrides** 中的 **Apply All** 应用于预制体中。
+
+![image-20210717220640378](NewHand.assets/image-20210717220640378.png)
+
+**3.添加声音片段**
+
+找到资源文件中的音乐片段，将其拖拽到 Audio Source 中的 Audio Clip里。
+
+**Play On Awake**：游戏一启动即自动播放
+
+**Loop**：循环播放
+
+# 十七、对话框 Dialog
+
+**1.添加 Panel**
+
+在之前做的 UI 的 **Canvas** 中新建 UI -> **Panel** (面板), 在其 Inspector 中调整其属性（如颜色、位置、大小等）。
+
+**2.添加 Text**
+
+在前面做好的 Panel 中添加 Text，同样可以设置 Text 的内容、颜色、大小、字体等属性。
+
+tips：按住 <kbd>alt</kbd> 可以使中心位置不动调整两边大小。
+
+**3.添加 Dialog 的触发器**
+
+在我们游戏场景中想要触发对话的位置(如房子的门)添加一个 Box Collider 并设置 Is Trigger，即未触发前设置默认为不显示对话。
+
+设置 **Player** 的 Perfabs 的 **Tag** 为 Player。
+
+触发对话的位置游戏对象的代码如下
+```c#
+public class EnterDialog : MonoBehaviour
+{
+    public GameObject enterDialog;// 用于获取Dialog对象
+    private void OnTriggerEnter2D(Collider2D other) //触发对话
+    {
+        if(other.tag == "Player")
+        {
+            enterDialog.SetActive(true);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other) //离开停止对话
+    {
+        if(other.tag == "Player")
+        {
+            enterDialog.SetActive(false);
+        }
+    }
+}
+```
+
+**4.给 Dialog 添加动画效果**
+
+在 **Animation** 文件夹下新建 **Dialog** 文件夹，新建 Animation 文件，将其拖拽到游戏对象(**对话框**，而非触发处)处会自动生成它的 Animator。
+
+录制动画：在 Animation 窗口中找到红圈圈(录制按钮), 在每个指定帧之间设置 **Text** 的颜色等属性，实现渐出的效果。第一帧设置对话框和文本的不透明度都为 0，之后的帧提高不透明度。
+
+**My result：**
+
+![dialog](NewHand.assets/dialog.gif)
+
+# 十八、
