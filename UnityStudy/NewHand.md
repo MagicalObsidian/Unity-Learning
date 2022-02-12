@@ -735,7 +735,7 @@ Enemy_Frog frog = other.gameObject.GetComponent<Enemy_Frog>();
 
 **2.添加 Audio Source**
 
-首先为 Player 添加组件 Audio Source ，如果该组件左边出现蓝色边框，说明未加入到预制体 Perfabs 中。
+首先为 Player 添加组件 Audio Source ，**如果该组件左边出现蓝色边框，说明未加入到预制体 Perfabs 中**。
 
 ![image-20210717220439493](NewHand.assets/image-20210717220439493.png)
 
@@ -801,4 +801,47 @@ public class EnterDialog : MonoBehaviour
 
 ![dialog](NewHand.assets/dialog.gif)
 
-# 十八、
+# 十八、趴下 Crouch
+
+1.之前 **匍匐前进 creep** 的问题
+
++ 判断输入按键用的语句是 Input.GetKey(KeyCode.S)，即判断是否按下了键盘<kbd>s</kbd>键。其实可以在 Edit -> Project Setting -> Input Manager 中新建一个 Crouch （类似 Jump），可以设置其参数。
+
+  ![image-20220212200840930](NewHand.assets/image-20220212200840930.png)
+
++ 然后是解决碰撞体的问题。趴下就将角色上方的 Box Collider 设置为 false 不可用，这样角色就可以仅凭 Circle Collider 通过矮小通道，这在之前的代码已经实现。然后出现的问题是，当角色已经趴下进入“隧道”，但松开了趴下按键，即角色由趴下状态转换为站立状态时，会与我们的 地面 **Ground** 产生错误的碰撞。
+
+  ![](NewHand.assets/creep_false.gif)
+
+**2.Ceiling**
+
+与之前对敌人的移动范围限制的方法类似，可以在 Player 的上方添加 **Ceiling** 用于判断是否碰撞到了 **Ground** 图层。 这里用到了新的函数 Physics2D.OverlapCircle（） ：三个参数分别是 设置的圆心点位置、 半径 、 判断的图层， 返回 bool。
+
+**tips:** 解决 **趴下 & 跳跃** 时 按键切换动画不流畅的问题： 将 **GetButtonDown** 和 **GetButtonUp** 用 **GetButton** 和 ！**GetButton** 替代。
+
+代码片段：
+```c#
+        //角色匍匐前进
+        if(Physics2D.OverlapCircle(ceiling_check.position, 0.2f, ground) == false)
+            //当没有与上方 ground 发生碰撞是正常执行
+        {
+            if(Input.GetButton("Crouch")) 
+            {
+                coll_creep.enabled = false;
+                //设置 Box Collider 不可用，这样就可以以较低的 Circle Collider通过了
+                animator.SetBool("creeping", true);
+            }
+            else if(!Input.GetButton("Crouch"))
+            {
+                coll_creep.enabled = true;
+                animator.SetBool("creeping", false);
+            }
+        }
+```
+
+**My result:**
+
+![](NewHand.assets/creep_finall.gif)
+
+# 十九、
+
