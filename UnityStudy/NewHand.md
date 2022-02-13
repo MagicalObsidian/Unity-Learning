@@ -843,5 +843,18 @@ public class EnterDialog : MonoBehaviour
 
 ![](NewHand.assets/creep_finall.gif)
 
-# 十九、
+# 十九、场景控制 Scene
+
+**1.碰撞触发器**
+
+角色掉落场景后直接死亡，并重新返回出身点，这个功能可以类似之前的收集物品的功能模块，用触发器实现。
+
+其中用到了 **UnityEngine.SceneManagement** 里面的 **SceneManager.LoadScene()**
+```c#
+SceneManager.LoadScene(SceneManager.GetActiveScene().name);//获得当前 scene 的名字
+```
+
+**2.Restart (延迟效果)**
+
+将重启游戏的代码写进新的函数 Restart() 里, 在将其在触发器函数里调用。
 
