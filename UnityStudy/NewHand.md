@@ -857,4 +857,33 @@ SceneManager.LoadScene(SceneManager.GetActiveScene().name);//获得当前 scene 
 **2.Restart (延迟效果)**
 
 将重启游戏的代码写进新的函数 Restart() 里, 在将其在触发器函数里调用。
+```c#
+    void Restart()//重载页面
+    { 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);//获得当前 scene 的名字
+    }
+    
+    //角色掉落“死亡线”后死亡并重置游戏
+    if(other.tag == "DeadLine") {
+    	GetComponent<AudioSource>().enabled = false;//禁用所有音乐组件
+    	Invoke("Restart", 2f);//重载页面 延迟2秒
+    }
+```
 
+**3.进入新的场景**
+
+新建一个 脚本，编写如下代码后将其挂载到带有触发器功能的 **EnterDialog** 中
+```c#
+    if(Input.GetKey(KeyCode.E)) 
+    {
+        //加载场景， 可以直接用场景编号
+        //SceneManager.GetActiveScene().buildIndex
+        SceneManager.LoadScene(1);
+    }
+```
+
+**My result:**
+
+![](NewHand.assets/enter_newscene.gif)
+
+# 二十、2D光效
