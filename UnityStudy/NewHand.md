@@ -887,3 +887,15 @@ SceneManager.LoadScene(SceneManager.GetActiveScene().name);//获得当前 scene 
 ![](NewHand.assets/enter_newscene.gif)
 
 # 二十、2D光效
+
+这部分可以学习的地方很多，目前只需了解一部分。
+
+1.在 Assets 中新建材质 Material 作为我们自己创建的环境光。在 Inspector 里 shader 中选择 sprites -> Diffuse,散射光。然后将其挂载到需要 “变暗” 的对象上。
+
+2.Point Light 点光源：可以调整各种参数如光照范围 Range 光强 Intensity等；可以将其放到合适的位置或者挂载到游戏角色上以达到想要的效果。
+
+**My result ：**
+
+![](NewHand.assets/light.gif)
+
+# 二十一、
