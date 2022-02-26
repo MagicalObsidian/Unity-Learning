@@ -898,4 +898,58 @@ SceneManager.LoadScene(SceneManager.GetActiveScene().name);//获得当前 scene 
 
 ![](NewHand.assets/light.gif)
 
-# 二十一、
+# 二十一、Parallax 视觉差
+
+**1.将 Background 的 Polygon Collider 2D 单独拿出来作为 CameraArea**
+
+**2.编写 Parallax.cs 代码**
+
+代码片段：
+```c#
+    void Update()
+    {
+        if(lockY) {
+            transform.position = new Vector2(startPoint_X + Cam.position.x * moveRate, transform.position.y);
+        }
+        else {
+            transform.position = new Vector2(startPoint_X + Cam.position.x * moveRate, startPoint_Y + Cam.position.y * moveRate);
+        }
+    }
+```
+
+**My result:**
+
+![](NewHand.assets/parallax.gif)
+
+# 二十二、 MainMenu 主菜单
+
+**1.主菜单的UI**
+
+与之前学过的 UI 内容类似，通过创建 Panel 来设置 Button，text 等
+
+**2.事件**
+
+在脚本代码中编写按钮事件，如 按下 **Play**  会加载第一个游戏场景等
+
+代码片段：
+```c#
+	public void PlayGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ShowUI()
+    {
+        GameObject.Find("Canvas/MainMenu/UI").SetActive(true);
+    }
+```
+
+**My result:**
+
+![](NewHand.assets/menu.gif)
+
+# 二十三、
