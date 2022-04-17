@@ -66,13 +66,13 @@
 
 ​		在 2D Game 中，常用的组件 Rigidbody 2D (刚体) : 把对象转换成”实际的物体“。
 
-​		Conllider : 碰撞体 
+​		Collider : 碰撞体 
 
 ​		Box Conllider 2D ：碰撞箱
 
-​		我们可以为 Player 设置一个碰撞箱，可以使用 Edit Conllider 编辑它的大小。
+​		我们可以为 Player 设置一个碰撞箱，可以使用 Edit Collider 编辑它的大小。
 
-​		然后将我们的 Tilemap 设置一个 Tilemap Conllider，同样使地图也成为一个碰撞体。
+​		然后将我们的 Tilemap 设置一个 Tilemap Collider，同样使地图也成为一个碰撞体。
 
 ​	**My result:**
 
@@ -953,3 +953,11 @@ SceneManager.LoadScene(SceneManager.GetActiveScene().name);//获得当前 scene 
 ![](NewHand.assets/menu.gif)
 
 # 二十三、
+
+void Awake(){}
+
+初始化函数，在游戏开始时系统自动调用。一般用来创建变量之类的东西。
+
+void Start(){}
+
+初始化函数，在所有Awake()运行完之后 运行，一般用来给变量赋值。
